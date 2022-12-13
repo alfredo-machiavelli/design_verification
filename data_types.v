@@ -143,14 +143,28 @@ METHODS
   end  
 
 /*   
-
 STRUCTS AND UNIONS
+*/  
+  struct { bit [7:0] opcode; bit [23:0] addr; }IR; // anonymous structure
+                                                   // defines variable IR
+  IR.opcode = 1;                                   // set field in IR
 
+//more examples
+
+typedef struct { bit [7:0] opcode; bit [23:0] addr;} instruction; // named structure type
+instruction IR; // define variable    
     
-    
-  
-  
-  
+//union example
+
+ typedef union { int i; shortreal f; } num; // named union type
+ num n;
+ n.f = 0.0;                                 // set n in floating point format
+ 
+//example w/ an array
+
+typedef struct { bit isfloat; union { int i; shortreal f; } n; // anonymous type
+               } tagged_st;                                    // named structure
+tagged_st a[9:0]; // array of structures named a
   
   
   
