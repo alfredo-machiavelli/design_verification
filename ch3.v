@@ -48,11 +48,15 @@
   
   Syntax error: IDLE=2’b00, XX=2’bx <ERROR>, S1=2’b01, S2=2’b10
       enum {IDLE, XX=’x, S1=2’b01, S2=2’b10} state, next;
-      enum integer {IDLE, XX=’x, S1, S2} state, next;
+      enum integer {IDLE, XX=’x, S1, S2} state, next;               //
+      enum bit [3:0] {bronze=5'h13, silver, gold=3'h5} medal4;      // error in bronze and gold declaration
+      enum bit [0:0] {a,b,c} alphabet;                              // requires at least 2 bits
       
   Correct: IDLE=0, XX=’x, S1=1, S2=2
       enum integer {IDLE, XX=’x, S1=’b01, S2=’b10} state, next;
-      
+      enum {bronze=3, silver, gold} medal;                          // silver=4, gold=5     
+      enum bit [3:0] {bronze='h3, silver, gold='h5} medal4;
+      enum bit [3:0] {bronze=4'h3, silver, gold=4'h5} medal4;
   
   
   
