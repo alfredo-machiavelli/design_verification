@@ -124,8 +124,30 @@ METHODS
     last()  - returns last member of enumeration;
             function enum last();
     next()  - returns Nth next enumeration val starting from curr val of given var
-  
-  
+            function enum next( int unsigned N = 1 );
+    prev()  - returns Nth prev enumeration val starting from curr val of given var
+            function enum prev( int unsigned N = 1 );       
+    num()   - returns num of elements in given enumeration
+            function int num();
+    name()  - returns string representatin of enumeration val
+            function string name();
+            
+    ok ... how to display all names and vals in an enumeration??
+*/
+  typedef enum { red, green, blue, yellow } Colors;                   //Colors holds red,green, blue, yellow 
+  Colors c = c.first;                                                 //init first val - c is init into enum
+  forever begin                                                       //this is kind of like a while loop
+    $display( "%s : %d\n", c.name, c );                               //get name and val 
+    if( c == c.last ) break;                                          //if we are at end, just break out of loop
+    c = c.next;                                                       //get to the next element
+  end  
+
+/*   
+
+STRUCTS AND UNIONS
+
+    
+    
   
   
   
