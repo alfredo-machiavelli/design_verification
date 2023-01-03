@@ -165,8 +165,71 @@ instruction IR; // define variable
 typedef struct { bit isfloat; union { int i; shortreal f; } n; // anonymous type
                } tagged_st;                                    // named structure
 tagged_st a[9:0]; // array of structures named a
+
+/* what is the difference between a struct and a union?
+      For a struct, there is a piece of memoery allocated for each data input - store multiple values of various members
+      For a union, there is one piece of memory for the whole data structure - store one val at a time for each member
+   
+   what is a packed structure?
+       consists of bit fields which are packeed together in memory without gaps - easily converted to and from bit vectors
+*/
+
+//Packed Structure Examples
   
+struct packed signed {
+    int a;
+    shortint b;
+    byte c;
+    bit [7:0] d; 
+} pack1;              //signed, 2-state
+
+struct packed unsigned {
+    time a;
+    integer b;
+    logic [31:0] c; 
+} pack2;              //unsigned, 4-state
+
+// if any data type within a packed structure is 4-state, the whole structure is treated as a 4-state; any 2-state members are converted to cast
+// to access:
+pack1 [15:8] //c
+
+//a packed structure can be used with a typedef -- but what does a typedef do??
   
+typedef struct packed { // default unsigned
+  bit [3:0] GFC;
+  bit [7:0] VPI;
+  bit [11:0] VCI;
+  bit CLP;
+  bit [3:0] PT ;
+  bit [7:0] HEC;
+  bit [47:0] [7:0] Payload;
+  bit [2:0] filler;
+} s_atmcell; 
+
+// a packed union contains members that must be packed structures all of the SAME SIZE (unpacked can be of different sizes)
+// example: a union can be accessible with difference access widths 
+
+typedef union packed {        //defaut unsigned
+  s_atmcell acell;
+  bit [423:0] bit_slice;
+  bit [
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
   
   
