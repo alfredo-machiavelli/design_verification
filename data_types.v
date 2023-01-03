@@ -212,12 +212,34 @@ typedef struct packed { // default unsigned
 typedef union packed {        //defaut unsigned
   s_atmcell acell;
   bit [423:0] bit_slice;
-  bit [
+  bit [52:0] [7:0] byte_slice;
+} u_atmcell;
 
+u_atmcell u1;
+byte b;
+bit [3:0] nib;
 
+b = u1.bit_slice[415:408];        // same as b = u1.byte_slice[51];
+nib = u1.bit_slice [423:420];     // same as nib = u1.acell.GFC;
 
+//signing of unpacked structure is not allowed
+  
+typedef struct signed {
+  int f1;
+  logic f2;
+} sIllegalSignedUnpackedStructType;       // illegal declaration
 
+/* the qualifier 'tagged' in a union = type-checked union
+   in an untagged union, it can be updated using a value of one member type + read as a val of another member type (type loophole)
+   tage and val updated together - cannot misinterpret data type
+*/
 
+//members can also be declared with type 'void' - all info is in the tag itself - here's an ex
+
+typedef union tagged {
+  void Invalid;
+  int Valid;
+} VInt;
 
 
 
