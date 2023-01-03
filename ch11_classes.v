@@ -192,15 +192,61 @@ p = new; // initialize variable to a new allocated object of the class Packet
       test = b1.a.j;                // test is set to 50 (a.j has changed)
     endfunction
     
+//INHERITANCE AND SUBCLASSES
     
+    class LinkedPacket;
+      
+      Packet packet_c;
+      LinkedPacket next;
+      
+      function LinkedPacket get_next();
+        get_next = next;
+      endfunction
+      
+    endclass
     
+    //we don't actually need 'Packet packet_c' if we extend the class; this is called single inheritance
     
+    class LinkedPacket extends Packet;
+      
+      LinkedPacket next;
+      
+      function LinkedPacket get_next();
+        get_next = next;
+      endfunction
+      
+    endclass
     
+//OVERRIDDEN MEMBERS - subclass objects are also legal representatie objects of their parent classes - every linkedpacket is a legal packet
     
+    //here we assign a packet var the handle of a LinkedPacket object
+    LinkedPacket lp = new;
+    Packet p = lp;
     
+    //example
+    class Packet;
+      integer i = 1;
+      function integer get();
+        get = i;
+      endfunction
+    endclass
     
+    class LinkedPacket extends Packet;
+      integer i = 2;
+      function integer get();
+        get = -i;
+      endfunction
+    endclass
     
+    //evaluate
+    LinkedPacket lp = new;
+    Packet p = lp;
     
+    //even though the handle is LinkedPacket, the variable type overrides members
+    j = p.i;              // j = 1, not 2
+    j = p.get();          // j = 1, not -1 or –2
+    
+//SUPER    
     
     
     
