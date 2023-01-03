@@ -132,9 +132,79 @@ p = new; // initialize variable to a new allocated object of the class Packet
     endclass
     
   //static method vs method w/ static lifetime
-     
-     
-
+    
+    class TwoTasks;
+      static task foo(); ..... endtask        //static class method with austomatic variable lifetime
+      task static bar(); ..... endtask        //non-static class method with static variable lifetime
+    endclass
+  
+ /* 'this' keyword */
+    
+    class Demo;
+      integer x;
+      
+      function new (integer x)
+        this.x = x;             //this.x refers to the integer x that was init outside of the function .. same as most OOP lang
+      endfunction
+      
+    endclass
+      
+// ASSIGNMENT, RE-NAMING, AND COPYING
+    
+    
+    //declaring class variable...
+    Packet p1;
+    
+    //init val of p1 is null; object does not exist and p1 does not contain an actual handle until an instance is created
+    
+    //creating an instance...
+    p1 = new;
+    
+    //ok so now we declare and assign another var from the old handle to the new one
+    Packet p2;
+    p2 = p1;
+    
+    //there is still only one object which can referred to w/ the name p1 or p2 bc 'new' was only executed once
+    
+    //..but what if we did this?
+    Packet p1;
+    Packet p2;
+    p1 = new;
+    p2 = new p1;
+    
+    //we just created a SHALLOW COPY; all properties and methods are copied into a new object but the actual object is not copied (just the handles)
+    
+    class A ;
+      integer j = 5;
+      endclass
+    
+    class B ;
+      integer i = 1;
+      A a = new;
+    endclass
+    
+    function integer test;
+      B b1 = new;                   // Create an object of class B
+      B b2 = new b1;                // Create an object that is a copy of b1
+      b2.i = 10;                    // i is changed in b2, but not in b1
+      b2.a.j = 50;                  // change a.j, shared by both b1 and b2
+      test = b1.i;                  // test is set to 1 (b1.i has not changed)
+      test = b1.a.j;                // test is set to 50 (a.j has changed)
+    endfunction
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
 
