@@ -1,0 +1,20 @@
+power consumption: amount of energy used per unit time
+
+  digital systems draw both 'dynamic' and 'static' power 
+  
+      dynamic -> power used to chrge capacitance as signals change between 0 and 1
+      static  -> power used even when signals do not change and system is idle
+      
+  logic gates + wires that connect them have capactiance
+  
+      C - capacitance (ability of a system to store an electric charge)  
+      energy drawn from power supply to charge C to voltage V(DD) is *****CV(DD)^2*****
+      if the voltage on the capacitor switches at frequency f (f times/sec), it charges the capacitor f/2 times + discharges f/2 times/sec
+      discharging does not draw energy from power supply, so the dynamic power consumption is 
+      
+                                              ***** P(dynamic) = 1/2 (CV(DD)^2)f *****
+  
+  electrical systems draw some current even when they are idle - so when transistors are off, they stil leak a small amount of current
+      the total static current (I(DD)) = leakage current = quiescent supply current flowing between V(DD) and GND
+      
+                                        ***** static power consumption = (I(DD))*(V(DD)) *****
