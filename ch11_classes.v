@@ -270,14 +270,88 @@ p = new; // initialize variable to a new allocated object of the class Packet
       
 //CHAINING CONSTRUCTORS    
     
+      class EtherPacket extends Packet(5);            //we pass 5 to the new routine associated with Packet 
     
-    
+      //we can also do this
+        
+      function new();
+        super.new(5);
+      endfunction
+        
+//ABSTRACT CLASSES AND VIRTUAL METHODS
+        
+  /* 
+     A set of classes can be created that can be viewed as all being derived from a common base class
+     
+     This base class will never be instantiated
 
-
-
-
-
-
-
-
+     From the base class, a number of useful subclasses could be derived
+  */
+        
+     virtual class BasePacket;        //virtual makes the class abstract
+                                      //overrides a method in all the base classes
+       
+     virtual class BasePacket;       //prototype no implementation
+        virtual function integer send(bit[31:0] data);
+        endfunction
+     endclass
+       
+     class EtherPacket extends BasePacket;              //class that can be instantiated
+        function integer send(bit[31:0] data);
+          // body of the function
+        endfunction
+     endclass
+       
+//POLYMORPHISM: dynamic method lookup; allows the use of a variable in the superclass to hold subclass objects
+       
+    BasePacket packets[100];   
+       
+       /*
+         few things to look at: (1) BasePacket is abstract but it can still be used to declare a var 
+                                (2) If all the data types were diff, it wouldn't have been able to be stored into an array, 
+                                    but bc we used virtual methods, it was possible
+       */
+       
+       EtherPacket ep = new; // extends BasePacket
+       TokenPacket tp = new; // extends BasePacket
+       GPSSPacket  gp = new; // extends EtherPacket
+       packets[0] = ep;
+       packets[1] = tp;
+       packets[2] = gp;
+       
+// PARAMETERIZED CLASSES       
+       
+   //The normal Verilog parameter mechanism is used to parameterize a class:
+      class vector #(int size = 1);
+        bit [size-1:0] a;
+      endclass    
+       
+  //Instances of this class can then be instantiated like modules or interfaces:
+      vector #(10) vten; // object with vector of size 10
+      vector #(.size(2)) vtwo; // object with vector of size 2
+      typedef vector#(4) Vfour; // Class with vector of size 4
+       
+  //This feature is particularly useful when using types as parameters:
+      class stack #(type T = int);
+        local T items[];
+        task push( T a ); ... endtask
+        task pop( ref T a ); ... endtask
+      endclass  
+  //The above class defines a generic stack class that can be instantiated with any arbitrary type:
+      stack is;               // default: a stack of int’s
+      stack#(bit[1:10]) bs;   // a stack of 10-bit vector
+      stack#(real) rs;        // a stack of real numbers
+       
+//TYPEDEF CLASS - when a class variable needs to be declared before the class itself has been declared
+       
+       typedef class C2; // C2 is declared to be of type class
+       
+            class C1;
+              C2 c;
+            endclass
+       
+            class C2;
+              C1 c;
+            endclass
+       
 
