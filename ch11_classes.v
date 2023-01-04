@@ -246,8 +246,29 @@ p = new; // initialize variable to a new allocated object of the class Packet
     j = p.i;              // j = 1, not 2
     j = p.get();          // j = 1, not -1 or –2
     
-//SUPER    
+//SUPER  - used to access members of a parent class when those members are overriden by the derived class
     
+    class Packet;                                 //PARENT CLASS
+      integer value;
+      function integer delay();
+        delay = value * value;
+      endfunction
+    endclass
+    
+    class LinkedPacket extends Packet;           //DERIVED CLASS
+      integer value;
+      function integer delay();
+        delay = super.delay() + value * super.value;
+      endfunction
+    endclass
+    
+//CASTING - assign a superclass handle to a subclass variable  
+    
+    task $cast( singular dest_handle, singular source_handle );
+      
+    function int $cast( singular dest_handle, singular source_handle );
+      
+//CHAINING CONSTRUCTORS    
     
     
     
