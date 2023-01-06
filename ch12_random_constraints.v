@@ -127,18 +127,30 @@ randc bit [1:0] y;        //randc = randomly cycle through all the values in a r
   rand integer v;
   constraint c3 { v inside fives; }
     
-//DISTRIBUTION
+//DISTRIBUTION - constraints support set of weighted values (distribution) - you can't use on randc variables
+  
+x dist {100 := 1, 200 := 2, 300 := 5}          //x is = 100,200, or 300 w/ a weighted ratio of 1-2-5
+
+x != 200;
+x dist {100 := 1, 200 := 2, 300 := 5}         //a constraint is put that x cannot be 200; then x = 100 or 300 w/ a ratio of 1-5
+
+// you can also use ranges
+x dist { [100:102] := 1, 200 := 2, 300 := 5}
+
+//or you can use fractions
+x dist { [100:102] :/ 1, 200 := 2, 300 := 5}    // x is equal to one of 100, 101, 102, 200, or 300 with a weighted ratio of 1/3-1/3-1/3-2-5
+
+
+//IMPLICATION: denoted by -> -- these are equivalent to if-else constraints
+  
+bit [3:0] a, b;
+// a and b are both 4 bits (256 combinations of a and b)
+constraint c { (a == 0) -> (b == 1); }
+// if a==0, then b==1 so probability that a ==0 would remove 15 combinations (1/256-15) = 1/241
   
 
 
-
-
-
-
-
-
-
-
+//ITERATIVE CONSTRAINTS
 
 
 
