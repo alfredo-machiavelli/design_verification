@@ -1,1 +1,17 @@
 MULTIPLEXERS AND DECODERS
+
+  multiplexer - choose an output from among several possible inputs based on the value of a select signal
+  
+    use SOP or POS in truth table/K map to figure out the expression
+    
+    can also be built off of tri-state buffers - one tristate buffer is always active
+    
+    Wider Multiplexers: 4:1 = 4 inputs - 1 output; 2 select signals needed
+    
+    Multiplexer Logic: 
+      
+      muxes can be used as lookup tables (LUTs) to perform logic functions
+      
+      a 2^N input mux can be programmed to perform any N-input logic function
+  
+  decoder - has N inputs and 2^N outputs
